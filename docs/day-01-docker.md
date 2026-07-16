@@ -35,6 +35,8 @@ Output confirmed:
 
 Visiting `http://localhost:5000` showed the dashboard with all 4 seeded metrics rendering, and "Database status: Connected" — confirming the two containers were correctly networked (the app reaches the database via the service name `db`, not a hardcoded IP).
 
+![Lumen Analytics Dashboard](./screenshots/dashboard-day1.png)
+
 ## Key concepts practiced
 - Docker container networking (service-name-based DNS resolution between containers)
 - Multi-container orchestration with Docker Compose
