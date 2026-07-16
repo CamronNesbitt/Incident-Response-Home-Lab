@@ -15,14 +15,14 @@
 
 ## What actually happened (including the troubleshooting)
 
-Setting up the environment was its own exercise in troubleshooting — worth documenting since this is exactly the kind of problem-solving a support/ops role involves:
+Setting up the environment was its own exercise in troubleshooting which is worth documenting since this is exactly the kind of problem-solving a support/ops role involves:
 
 1. **`wsl --install` didn't install a distro.** The engine installed but no Linux distribution came with it (a stray keypress interrupted the flow). Fixed by explicitly running `wsl --install -d Ubuntu`.
-2. **Confused a mounted ISO for the WSL terminal.** A leftover Ubuntu desktop ISO in Downloads got triggered as a mounted disc image, which looked like it could be the terminal. Recognized it wasn't (wrong icon, wrong file type) and cancelled it — launched the actual WSL Ubuntu distro instead.
-3. **Docker CLI crashed with a SIGBUS fault** on `docker compose version` — a bug in the Docker CLI's telemetry code, not a config issue on my end. Fixed by fully quitting Docker Desktop, running `wsl --shutdown` to reset the WSL state, and relaunching.
-4. **Docker Desktop was in "Resource Saver mode"** after being idle, which put the engine to sleep — meaning WSL couldn't see the `docker` command at all. Fixed by manually resuming the engine from the Docker Desktop UI.
+2. **Confused a mounted ISO for the WSL terminal.** A leftover Ubuntu desktop ISO in Downloads got triggered as a mounted disc image, which looked like it could be the terminal. Recognized it wasn't (wrong icon, wrong file type) and cancelled it to then launch the actual WSL Ubuntu distro instead.
+3. **Docker CLI crashed with a SIGBUS fault** on `docker compose version` a bug in the Docker CLI's telemetry code, not a config issue on my end. Fixed by fully quitting Docker Desktop, running `wsl --shutdown` to reset the WSL state, and relaunching.
+4. **Docker Desktop was in "Resource Saver mode"** after being idle, which put the engine to sleep, meaning WSL couldn't see the `docker` command at all. Fixed by manually resuming the engine from the Docker Desktop UI.
 
-Each of these was a real "it's not working and I don't know why yet" moment — diagnosed by reading the actual error output rather than guessing, and fixed one layer at a time.
+Each of these was a real "it's not working and I don't know why yet" moment which was diagnosed by reading the actual error output rather than guessing, and fixed one layer at a time.
 
 ## Verification
 ```bash
@@ -33,7 +33,7 @@ Output confirmed:
 - Postgres ran the seed script (`CREATE TABLE`, `INSERT 0 4`)
 - Flask app served successfully on `http://127.0.0.1:5000`
 
-Visiting `http://localhost:5000` showed the dashboard with all 4 seeded metrics rendering, and "Database status: Connected" — confirming the two containers were correctly networked (the app reaches the database via the service name `db`, not a hardcoded IP).
+Visiting `http://localhost:5000` showed the dashboard with all 4 seeded metrics rendering, and "Database status: Connected" confirming the two containers were correctly networked (the app reaches the database via the service name `db`, not a hardcoded IP).
 
 ![Lumen Analytics Dashboard](./screenshots/dashboard-day1.png)
 
