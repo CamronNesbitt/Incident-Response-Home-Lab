@@ -1,10 +1,10 @@
 # Lumen Analytics — Home Lab Project
 
-A self-built home lab simulating the role of a Support/SRE engineer at a small SaaS company, **Lumen Analytics**. This project walks through the full lifecycle of a small application: building it, containerizing it, deploying it to Kubernetes, hosting it in the cloud, breaking it on purpose, and resolving the resulting incident through ServiceNow and Jira — the same tools and workflow used in real IT support and DevOps roles.
+A self-built home lab simulating the role of a Support/SRE engineer at a small SaaS company, **Lumen Analytics**. This project walks through the full lifecycle of a small application: building it, containerizing it, deploying it to Kubernetes, hosting it in the cloud, breaking it on purpose, and resolving the resulting incident through ServiceNow and Jira, the same tools and workflow used in real IT support and DevOps roles.
 
 ## Why this project exists
 
-I'm building hands-on experience with tools commonly required for entry-level IT support, helpdesk, and junior DevOps/SRE roles: ITSM ticketing (ServiceNow, Jira), cloud platforms (AWS/Azure), and containerization (Docker, Kubernetes). Rather than just taking courses, I wanted to build something real, break it, and document the troubleshooting process — because that's what the job actually looks like day to day.
+I'm building hands-on experience with tools commonly required for entry-level IT support, helpdesk, and junior DevOps/SRE roles: ITSM ticketing (ServiceNow, Jira), cloud platforms (AWS/Azure), and containerization (Docker, Kubernetes). Rather than just taking courses, I wanted to build something real, break it, and document the troubleshooting process because that's what the job actually looks like day to day.
 
 ## Project phases
 
