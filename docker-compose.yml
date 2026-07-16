@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16
+    container_name: lumen-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lumen
+      POSTGRES_USER: lumen_user
+      POSTGRES_PASSWORD: lumen_pass
+    volumes:
+      - lumen-db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lumen_user -d lumen"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: ./app
+    container_name: lumen-web
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_NAME: lumen
+      DB_USER: lumen_user
+      DB_PASS: lumen_pass
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  lumen-db-data:

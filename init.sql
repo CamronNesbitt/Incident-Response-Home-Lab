@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS metrics (
+    id SERIAL PRIMARY KEY,
+    metric_name VARCHAR(100) NOT NULL,
+    value INTEGER NOT NULL
+);
+
+INSERT INTO metrics (metric_name, value) VALUES
+    ('active_users', 1423),
+    ('daily_signups', 87),
+    ('avg_session_minutes', 12),
+    ('error_rate_pct', 1);
