@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lumen-web
+  labels:
+    app: lumen-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lumen-web
+  template:
+    metadata:
+      labels:
+        app: lumen-web
+    spec:
+      containers:
+        - name: web
+          image: lumen-web:local
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: lumen-db-service
+            - name: DB_NAME
+              value: lumen
+            - name: DB_USER
+              value: lumen_user
+            - name: DB_PASS
+              value: lumen_pass

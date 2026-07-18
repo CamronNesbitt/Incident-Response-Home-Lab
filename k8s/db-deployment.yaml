@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lumen-db
+  labels:
+    app: lumen-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lumen-db
+  template:
+    metadata:
+      labels:
+        app: lumen-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: lumen
+            - name: POSTGRES_USER
+              value: lumen_user
+            - name: POSTGRES_PASSWORD
+              value: lumen_pass
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script
+          configMap:
+            name: lumen-db-init

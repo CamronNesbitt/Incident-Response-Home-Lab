@@ -1,47 +1,48 @@
-# Lumen Analytics — Home Lab Project
+# Lumen Analytics — Home Lab Phase 1
 
-A self-built home lab simulating the role of a Support/SRE engineer at a small SaaS company, **Lumen Analytics**. This project walks through the full lifecycle of a small application: building it, containerizing it, deploying it to Kubernetes, hosting it in the cloud, breaking it on purpose, and resolving the resulting incident through ServiceNow and Jira — the same tools and workflow used in real IT support and DevOps roles.
+A tiny 2-container "SaaS" app: a Flask web dashboard + a Postgres database,
+wired together with Docker Compose. This is the foundation for the larger
+home lab scenario (Docker -> Kubernetes -> Cloud -> Incident/Ticketing).
 
-## Why this project exists
+## What's inside
+- `app/app.py` — Flask app that reads a `metrics` table and renders a dashboard
+- `app/Dockerfile` — builds the web app image
+- `app/requirements.txt` — Python dependencies
+- `docker-compose.yml` — defines the `web` and `db` services
+- `init.sql` — seeds the database with sample rows on first startup
 
-I'm building hands-on experience with tools commonly required for entry-level IT support, helpdesk, and junior DevOps/SRE roles: ITSM ticketing (ServiceNow, Jira), cloud platforms (AWS/Azure), and containerization (Docker, Kubernetes). Rather than just taking courses, I wanted to build something real, break it, and document the troubleshooting process — because that's what the job actually looks like day to day.
+## Prerequisites
+- Docker Desktop installed and running (or Docker Engine + Compose on Linux)
 
-## Project phases
+## Run it
+From this folder:
 
-| Phase | Status | What it covers |
-|---|---|---|
-| [Phase 1: Containerize the app](./docs/day-01-docker.md) | ✅ Complete | Docker, Docker Compose, multi-container networking |
-| Phase 2: Deploy to Kubernetes | 🔜 Up next | Minikube, Pods, Deployments, Services |
-| Phase 3: Move to the cloud | ⬜ Planned | Azure VM, Container Instances |
-| Phase 4: Break it on purpose | ⬜ Planned | Simulated outage |
-| Phase 5: Ticket it like a pro | ⬜ Planned | ServiceNow incident + Jira bug ticket + resolution |
-
-## Day-by-day log
-Detailed write-ups of each session, including what broke and how I fixed it, live in [`/docs`](./docs).
-
-- [Day 1 — Docker & Docker Compose setup](./docs/day-01-docker.md)
-
-## Architecture (so far)
-
-```
-┌─────────────────────────┐      ┌─────────────────────────┐
-│   lumen-web (Flask)     │◄────►│   lumen-db (Postgres)   │
-│   Port 5000             │      │   Port 5432             │
-└─────────────────────────┘      └─────────────────────────┘
-        Docker Compose network (bridge)
-```
-
-## Tech stack
-- **App:** Python / Flask
-- **Database:** PostgreSQL 16
-- **Containerization:** Docker, Docker Compose
-- **Environment:** Windows 11 + WSL2 (Ubuntu) + Docker Desktop
-- **Coming soon:** Kubernetes (Minikube), Azure, ServiceNow, Jira
-
-## Running it locally
 ```bash
-git clone https://github.com/CamronNesbitt/Incident-Response-Home-Lab.git
-cd Incident-Response-Home-Lab
 docker compose up --build
 ```
-Then visit http://localhost:5000
+
+Then open:
+- http://localhost:5000 — the dashboard (should show a table of metrics, status "Connected")
+- http://localhost:5000/health — a JSON health check endpoint (used later for k8s probes)
+
+## Stop it
+```bash
+docker compose down
+```
+
+To also wipe the database volume (full reset):
+```bash
+docker compose down -v
+```
+
+## Verify things are working
+```bash
+docker compose ps        # both containers should show "running" / "healthy"
+docker compose logs web  # check app logs
+docker compose logs db   # check database logs
+```
+
+## What to screenshot for your portfolio
+1. `docker compose up --build` output showing both containers starting successfully
+2. The dashboard at localhost:5000 with the metrics table rendering
+3. `docker compose ps` showing both services healthy
